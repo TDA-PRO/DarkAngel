@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1 LIVE - By Dark Angel Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #FF6B35;
+            --primary-dark: #E55A2B;
+            --secondary: #00E5FF;
+            --accent: #FFD166;
+            --dark: #1A1A2E;
+            --darker: #0F0F1B;
+            --light: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --menu-bg: rgba(26, 26, 46, 0.95);
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 50%, #16213E 100%);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-attachment: fixed;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* নতুন হেডার ডিজাইন - ৩টি বার সহ */
+        .header-container {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 25px 20px;
+            background: rgba(255, 107, 53, 0.15);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        /* ৩টি বার এর ডিজাইন */
+        .header-bars {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .bar {
+            height: 6px;
+            border-radius: 3px;
+            flex: 1;
+            margin: 0 5px;
+        }
+        
+        .bar-left {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .bar-center {
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+            flex: 2;
+            height: 8px;
+        }
+        
+        .bar-right {
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+        }
+        
+        .header-title {
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 3.2rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+        
+        .tagline {
+            font-size: 1.3rem;
+            color: #b0b0b0;
+            font-weight: 300;
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 107, 53, 0.3);
+            background: #000;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .video-container.fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            padding-bottom: 0;
+            border-radius: 0;
+        }
+        
+        .fullscreen-btn {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 15px;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .fullscreen-btn:hover {
+            background: var(--primary);
+            transform: scale(1.05);
+        }
+        
+        .news-ticker-container {
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(255, 209, 102, 0.3);
+        }
+        
+        .news-ticker-container::before {
+            content: 'LIVE';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: var(--accent);
+            color: var(--dark);
+            font-weight: bold;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            z-index: 2;
+            box-shadow: 3px 0 15px rgba(0, 0, 0, 0.3);
+            font-size: 1.1rem;
+        }
+        
+        .news-ticker {
+            white-space: nowrap;
+            animation: ticker 25s linear infinite;
+            font-size: 1.3rem;
+            font-weight: bold;
+            padding-left: 80px;
+        }
+        
+        .news-ticker span.hasan {
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(255, 209, 102, 0.8);
+            font-weight: 900;
+            font-size: 1.4rem;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 3px 10px;
+            border-radius: 8px;
+            margin: 0 8px;
+        }
+        
+        @keyframes ticker {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+        
+        .matches-section {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 25px;
+            border-radius: 18px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--accent);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 12px;
+            display: flex;
+            align-items: center;
+            text-shadow: 0 0 10px rgba(255, 209, 102, 0.3);
+        }
+        
+        .section-title i {
+            margin-right: 15px;
+            font-size: 2rem;
+        }
+        
+        .matches-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+        
+        .match-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+        
+        .match-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .match-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .match-card.live {
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 20px rgba(255, 209, 102, 0.4);
+        }
+        
+        .match-status {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-live {
+            background: linear-gradient(45deg, #FF416C, #FF4B2B);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-upcoming {
+            background: linear-gradient(45deg, var(--secondary), #00B8D4);
+            color: var(--dark);
+        }
+        
+        .status-finished {
+            background: linear-gradient(45deg, #6c757d, #495057);
+            color: white;
+        }
+        
+        .match-teams {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            margin-top: 10px;
+        }
+        
+        .team {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+        
+        .team:last-child {
+            justify-content: flex-end;
+        }
+        
+        .team-flag {
+            width: 40px;
+            height: 25px;
+            margin: 0 12px;
+            border-radius: 4px;
+            object-fit: cover;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .team-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .vs {
+            margin: 0 15px;
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-shadow: 0 0 8px rgba(255, 209, 102, 0.5);
+        }
+        
+        .match-time {
+            text-align: center;
+            color: var(--accent);
+            font-weight: 600;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 1.1rem;
+        }
+        
+        .watch-live-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            margin-top: 15px;
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+            font-size: 1rem;
+        }
+        
+        .watch-live-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.6);
+            background: linear-gradient(90deg, var(--primary-dark), var(--primary));
+        }
+        
+        /* মেনু কন্টেইনার */
+        .menu-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        
+        .three-dot-menu {
+            background: rgba(255, 107, 53, 0.2);
+            border: 1px solid rgba(255, 107, 53, 0.4);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .three-dot-menu:hover {
+            background: rgba(255, 107, 53, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .three-dot-menu i {
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: var(--menu-bg);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            width: 220px;
+            z-index: 100;
+            overflow: hidden;
+            display: none;
+            backdrop-filter: blur(10px);
+        }
+        
+        .dropdown-menu.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .menu-item {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .menu-item:hover {
+            background: rgba(255, 107, 53, 0.2);
+        }
+        
+        .menu-item i {
+            margin-right: 15px;
+            font-size: 1.2rem;
+            color: var(--accent);
+            width: 20px;
+            text-align: center;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: rgba(26, 26, 46, 0.8);
+            border-radius: 15px;
+            margin-top: 25px;
+            font-size: 1rem;
+            color: #b0b0b0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        @media (max-width: 768px) {
+            .matches-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .news-ticker {
+                font-size: 1.1rem;
+            }
+            
+            .dropdown-menu {
+                width: 200px;
+            }
+            
+            .header-bars {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .bar {
+                width: 100%;
+                margin: 2px 0;
+            }
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Bangladesh time display */
+        .bd-time {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        .time-info {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #b0b0b0;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- হেডার এবং মেনু -->
+        <div class="header-container">
+            <header>
+                <!-- ৩টি বার -->
+                <div class="header-bars">
+                    <div class="bar bar-left"></div>
+                    <div class="bar bar-center"></div>
+                    <div class="bar bar-right"></div>
+                </div>
+                
+                <!-- টাইটেল -->
+                <div class="header-title">
+                    <div class="logo">1 LIVE</div>
+                    <div class="tagline">By Dark Angel Admin</div>
+                </div>
+            </header>
+            
+            <!-- মেনু কন্টেইনার উপরের ডান কুনায় -->
+            <div class="menu-container">
+                <div class="three-dot-menu" id="threeDotMenu">
+                    <i class="fas fa-ellipsis-v"></i>
+                </div>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <div class="menu-item" id="downloadBtn">
+                        <i class="fas fa-download"></i>
+                        <span>Download APK</span>
+                    </div>
+                    <div class="menu-item">
+                        <i class="fas fa-bell"></i>
+                        <span>Live Notifications</span>
+                    </div>
+                    <div class="menu-item">
+                        <i class="fas fa-info-circle"></i>
+                        <span>About Us</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="video-container" id="videoContainer">
+            <iframe src="http://103.89.248.22:8082/1LIVE/embed.html?token=fccffdb866bd859444a841f4b3fbefc8fc67b9c8-cede2daa6b29bb6fec9280d191a19894-1762062868-1762052068&remote=no_check_ip&fbclid=IwY2xjawNzq_5leHRuA2FlbQIxMQABHuc8slAdS0kgRbYZtSruGp1GdJV0zH78XhjDq7ppbNhobAnjylqwxQrk7tAB_aem__GkYos_arT06OydiPWpE9g" allowfullscreen></iframe>
+            <button class="fullscreen-btn" id="fullscreenBtn"><i class="fas fa-expand"></i> Fullscreen</button>
+        </div>
+        
+        <div class="news-ticker-container pulse">
+            <div class="news-ticker">
+                1 LIVE - BY DARK ANGEL ADMIN - <span class="hasan">HASAN</span> &lt;3 || YOU CAN WATCH EVERY LIVE HERE! & W8 FOR MORE UPDATES! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                1 LIVE - BY DARK ANGEL ADMIN - <span class="hasan">HASAN</span> &lt;3 || YOU CAN WATCH EVERY LIVE HERE! & W8 FOR MORE UPDATES! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                1 LIVE - BY DARK ANGEL ADMIN - <span class="hasan">HASAN</span> &lt;3 || YOU CAN WATCH EVERY LIVE HERE! & W8 FOR MORE UPDATES! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+        </div>
+        
+        <div class="bd-time" id="bdTime">Bangladesh Time: Loading...</div>
+        <div class="time-info" id="timeInfo">All match times are in Bangladesh Standard Time (BST)</div>
+        
+        <div class="matches-section">
+            <h2 class="section-title"><i class="fas fa-tv"></i> Today All Live Matches</h2>
+            <div class="matches-container" id="matchesContainer">
+                <!-- Matches will be dynamically added here -->
+            </div>
+        </div>
+        
+        <footer>
+            <p>2025 All Copyrights Reserved By Dark Angel.</p>
+            <div class="social-icons">
+                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Menu functionality
+        const threeDotMenu = document.getElementById('threeDotMenu');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        
+        threeDotMenu.addEventListener('click', function(e) {
+            dropdownMenu.classList.toggle('active');
+            e.stopPropagation();
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function() {
+            dropdownMenu.classList.remove('active');
+        });
+        
+        // Download button redirect
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            window.location.href = 'https://example.com';
+        });
+        
+        // Fullscreen functionality
+        const videoContainer = document.getElementById('videoContainer');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        
+        fullscreenBtn.addEventListener('click', function() {
+            if (!document.fullscreenElement) {
+                if (videoContainer.requestFullscreen) {
+                    videoContainer.requestFullscreen();
+                } else if (videoContainer.mozRequestFullScreen) {
+                    videoContainer.mozRequestFullScreen();
+                } else if (videoContainer.webkitRequestFullscreen) {
+                    videoContainer.webkitRequestFullscreen();
+                } else if (videoContainer.msRequestFullscreen) {
+                    videoContainer.msRequestFullscreen();
+                }
+                videoContainer.classList.add('fullscreen');
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+                videoContainer.classList.remove('fullscreen');
+            }
+        });
+        
+        // Bangladesh time display
+        function updateBangladeshTime() {
+            const now = new Date();
+            const options = { 
+                timeZone: 'Asia/Dhaka', 
+                hour12: true, 
+                hour: 'numeric', 
+                minute: 'numeric',
+                second: 'numeric',
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
+            const bdTime = now.toLocaleString('en-US', options);
+            document.getElementById('bdTime').textContent = `Bangladesh Time: ${bdTime}`;
+            
+            // Update match status based on current time
+            updateMatchStatus();
+        }
+        
+        setInterval(updateBangladeshTime, 1000);
+        updateBangladeshTime();
+        
+        // Match data with exact Bangladesh times - ALL MATCHES ADDED
+        const matches = [
+            { 
+                team1: "Bulgaria", 
+                team2: "Cyprus", 
+                time: "1:00 PM", 
+                date: "today", 
+                scheduledTime: "13:00"
+            },
+            { 
+                team1: "Australia", 
+                team2: "India", 
+                time: "2:15 PM", 
+                date: "today", 
+                scheduledTime: "14:15"
+            },
+            { 
+                team1: "Zimbabwe", 
+                team2: "Afghanistan", 
+                time: "5:30 PM", 
+                date: "today", 
+                scheduledTime: "17:30"
+            },
+            { 
+                team1: "Brazil", 
+                team2: "Mexico", 
+                time: "10:30 PM", 
+                date: "today", 
+                scheduledTime: "22:30"
+            },
+            { 
+                team1: "UAE", 
+                team2: "United States", 
+                time: "11:30 AM", 
+                date: "tomorrow", 
+                scheduledTime: "11:30"
+            },
+            { 
+                team1: "Cyprus", 
+                team2: "Bulgaria", 
+                time: "1:00 PM", 
+                date: "tomorrow", 
+                scheduledTime: "13:00"
+            },
+            { 
+                team1: "Cyprua", 
+                team2: "Bulgaria", 
+                time: "5:15 PM", 
+                date: "tomorrow", 
+                scheduledTime: "17:15"
+            },
+            { 
+                team1: "Pakistan", 
+                team2: "South Africa", 
+                time: "4:00 PM", 
+                date: "Tue, Nov 4", 
+                scheduledTime: "16:00"
+            }
+        ];
+        
+        // Function to generate flag URLs
+        function getFlagUrl(country) {
+            const flagMap = {
+                "Bulgaria": "https://flagcdn.com/w40/bg.png",
+                "Cyprus": "https://flagcdn.com/w40/cy.png",
+                "Australia": "https://flagcdn.com/w40/au.png",
+                "India": "https://flagcdn.com/w40/in.png",
+                "Zimbabwe": "https://flagcdn.com/w40/zw.png",
+                "Afghanistan": "https://flagcdn.com/w40/af.png",
+                "Brazil": "https://flagcdn.com/w40/br.png",
+                "Mexico": "https://flagcdn.com/w40/mx.png",
+                "UAE": "https://flagcdn.com/w40/ae.png",
+                "United States": "https://flagcdn.com/w40/us.png",
+                "Cyprua": "https://flagcdn.com/w40/cy.png",
+                "Pakistan": "https://flagcdn.com/w40/pk.png",
+                "South Africa": "https://flagcdn.com/w40/za.png"
+            };
+            
+            return flagMap[country] || "https://flagcdn.com/w40/un.png";
+        }
+        
+        // Function to get current Bangladesh time in minutes
+        function getCurrentBDTimeInMinutes() {
+            const now = new Date();
+            const bdTime = now.toLocaleString('en-US', { 
+                timeZone: 'Asia/Dhaka', 
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            const [hours, minutes] = bdTime.split(':');
+            return parseInt(hours) * 60 + parseInt(minutes);
+        }
+        
+        // Function to convert match time to minutes
+        function getMatchTimeInMinutes(matchTime) {
+            const [hours, minutes] = matchTime.split(':');
+            return parseInt(hours) * 60 + parseInt(minutes);
+        }
+        
+        // Function to check if match should be LIVE
+        function isMatchLive(match) {
+            const currentTime = getCurrentBDTimeInMinutes();
+            const matchTime = getMatchTimeInMinutes(match.scheduledTime);
+            
+            // Match is LIVE if current time is within match time ± 15 minutes
+            // and it's the same day (for today's matches)
+            if (match.date === 'today') {
+                const timeDiff = currentTime - matchTime;
+                return Math.abs(timeDiff) <= 15; // ±15 minutes window
+            }
+            
+            return false;
+        }
+        
+        // Function to check if match is finished
+        function isMatchFinished(match) {
+            const currentTime = getCurrentBDTimeInMinutes();
+            const matchTime = getMatchTimeInMinutes(match.scheduledTime);
+            
+            // Match is finished if current time is more than 15 minutes after match time
+            if (match.date === 'today') {
+                const timeDiff = currentTime - matchTime;
+                return timeDiff > 15;
+            }
+            
+            return false;
+        }
+        
+        // Function to update match status
+        function updateMatchStatus() {
+            matches.forEach(match => {
+                if (isMatchLive(match)) {
+                    match.status = 'live';
+                } else if (isMatchFinished(match)) {
+                    match.status = 'finished';
+                } else {
+                    match.status = 'upcoming';
+                }
+            });
+            renderMatches();
+        }
+        
+        // Function to render matches
+        function renderMatches() {
+            const matchesContainer = document.getElementById('matchesContainer');
+            matchesContainer.innerHTML = '';
+            
+            // Check if matches array is loaded
+            if (matches.length === 0) {
+                matchesContainer.innerHTML = '<div style="text-align: center; color: var(--accent); font-size: 1.2rem; padding: 40px;">No matches found. Please check back later.</div>';
+                return;
+            }
+            
+            matches.forEach(match => {
+                const matchCard = document.createElement('div');
+                matchCard.className = `match-card ${match.status === 'live' ? 'live' : ''}`;
+                
+                let statusText = '';
+                let statusClass = '';
+                
+                if (match.status === 'live') {
+                    statusText = 'LIVE';
+                    statusClass = 'status-live';
+                } else if (match.status === 'finished') {
+                    statusText = 'FINISHED';
+                    statusClass = 'status-finished';
+                } else {
+                    statusText = 'UPCOMING';
+                    statusClass = 'status-upcoming';
+                }
+                
+                matchCard.innerHTML = `
+                    <div class="match-status ${statusClass}">
+                        ${statusText}
+                    </div>
+                    <div class="match-teams">
+                        <div class="team">
+                            <img src="${getFlagUrl(match.team1)}" alt="${match.team1}" class="team-flag">
+                            <span class="team-name">${match.team1}</span>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="team">
+                            <span class="team-name">${match.team2}</span>
+                            <img src="${getFlagUrl(match.team2)}" alt="${match.team2}" class="team-flag">
+                        </div>
+                    </div>
+                    <div class="match-time">${match.date} ${match.time} (BST)</div>
+                    ${match.status === 'live' ? '<button class="watch-live-btn">Watch Live</button>' : ''}
+                `;
+                
+                matchesContainer.appendChild(matchCard);
+                
+                // Add click event to watch live button
+                if (match.status === 'live') {
+                    const watchBtn = matchCard.querySelector('.watch-live-btn');
+                    watchBtn.addEventListener('click', function() {
+                        if (!document.fullscreenElement) {
+                            if (videoContainer.requestFullscreen) {
+                                videoContainer.requestFullscreen();
+                            } else if (videoContainer.mozRequestFullScreen) {
+                                videoContainer.mozRequestFullScreen();
+                            } else if (videoContainer.webkitRequestFullscreen) {
+                                videoContainer.webkitRequestFullscreen();
+                            } else if (videoContainer.msRequestFullscreen) {
+                                videoContainer.msRequestFullscreen();
+                            }
+                            videoContainer.classList.add('fullscreen');
+                        }
+                    });
+                }
+            });
+        }
+        
+        // Initialize matches
+        updateMatchStatus();
+        
+        // Debug info
+        console.log("Total matches loaded:", matches.length);
+        matches.forEach((match, index) => {
+            console.log(`Match ${index + 1}: ${match.team1} vs ${match.team2} - ${match.date} ${match.time}`);
+        });
+    </script>
+</body>
+</html>
